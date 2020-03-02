@@ -68,8 +68,6 @@ Rz = [cos(random_thetaz) -sin(random_thetaz) 0;sin(random_thetaz) cos(random_the
     H[1:3,1:3]=R; H[1:3,4]=[random_x;random_y;random_z];
     
 return H
-        
-        [random_x; random_y; random_z; random_thetax; random_thetay; random_thetaz]
 
 end
 

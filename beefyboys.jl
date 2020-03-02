@@ -40,8 +40,6 @@ random_z = rand(b[3,1]:b[3,2]);
 random_sample = [random_x; random_y; random_z]
 end
 
-function test(x,y,z,theta);
-  f1 = I4
-  end #function "test"
+
 
 end # module

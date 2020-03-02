@@ -20,12 +20,12 @@ x_a = [O_1; s_1; g_1];
 y_a = [O_2; s_2; g_2];
 z_a = [O_3; s_3; g_3];
 
-xmin = minimum(x_a) - 1; 
-xmax = maximum(x_a) + 1;
-ymin = minimum(y_a) - 1;
-ymax = maximum(y_a) + 1;
-zmin = minimum(z_a) - 1;
-zmax = maximum(z_a) + 1;
+xmin = minimum(x_a) - 2; 
+xmax = maximum(x_a) + 2;
+ymin = minimum(y_a) - 2;
+ymax = maximum(y_a) + 2;
+zmin = 0;
+zmax = maximum(z_a) + 2;
 
 Boundary = [xmin xmax; ymin ymax; zmin zmax]
 end # function

@@ -14,5 +14,7 @@ function findTestNode(closestNode, sample1, stepSize)
      
        testNode[4,4] = 1
        
+end
+       
 
 end # module

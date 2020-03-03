@@ -35,6 +35,7 @@ return [xmin xmax; ymin ymax; zmin zmax]
 end # function
 
 
+
 function collide(O,q)
         rows_O,columns_O = size(O);
         for i=1:rows_O
@@ -90,6 +91,7 @@ function findTestNode(closestNode, sample1, stepSize)
        testNode[1:3,1:3] = sample1[1:3,1:3]
      
        testNode[4,4] = 1
+    return testNode
        
 end
 
@@ -259,7 +261,7 @@ end
 
 function RRT(s,g,O)
     limits=world(s,g,O) #max and mins of objects in our world
-    step = minimum([O[:,4];1]); #set step to half the minimum radius
+    step = 5*minimum([O[:,4];1]); #set step to half the minimum radius
     dis=step+1; #set distance to goal greater than step
     Master = Any[]; #Master node list, including each node's 'parent'
     start_node = Any[]; #start node info, including parent node
@@ -289,6 +291,10 @@ function RRT(s,g,O)
 				push!(newNode,testNode);
 				push!(newNode,closestRow);
 				push!(Master,newNode);
+            #=display(newNode[1])
+            println(newNode[2])
+            println(size(Master,1))=#
+     
             
 				
 				#------------------------------------
@@ -299,16 +305,20 @@ function RRT(s,g,O)
 					push!(end_node,g); #add g to end_node
 					push!(end_node,size(Master,1)); #sets parent node to last node before goal
 					push!(Master, end_node); #adds end node to Master
-					
+                
 					reversePath=Any[];
 					row=size(Master,1);
 					#---------------------------------
 					while row != 0
 						push!(reversePath,Master[row][1]);
+                    
 						row=Master[row][2];
+            
 					end
 					finalPath=reverse(reversePath);
+                
                     return Tuple(finalPath)
+                
 
                     
                     

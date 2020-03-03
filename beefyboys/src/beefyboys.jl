@@ -35,6 +35,10 @@ end # function
 function collide(O,q)
         rows_O,columns_O = size(O);
         for i=1:rows_O
+        
+        if q[3,4]<1
+            return true
+        end
 
             if O[i,5] == 0 #obstacle is a sphere
 
@@ -176,9 +180,9 @@ return minRow
 end
 
 
-function prm(s,g,O)
+function PRM(s,g,O)
     limits=world(s,g,O) #max and mins of objects in our world
-    step = .5*minimum([O[:,4];1]); #set step to half the minimum radius
+    step = minimum([O[:,4];1]); #set step to half the minimum radius
     dis=step+1; #set distance to goal greater than step
     Master = Any[]; #Master node list, including each node's 'parent'
     start_node = Any[]; #start node info, including parent node
@@ -196,7 +200,7 @@ function prm(s,g,O)
 			nearestDistance=dist(Master[closestRow][1],sample);
 			
 			#-----------------------------------------
-			if nearestDistance<=1
+			if nearestDistance<=step
 				newNode=Any[];
 				push!(newNode,sample);
 				push!(newNode,closestRow);
@@ -204,7 +208,7 @@ function prm(s,g,O)
 				
 				#------------------------------------
 				goalDistance=dist(sample,g);
-				if goalDistance <= 1
+				if goalDistance <= step
 					
 					end_node = Any[]; #end node info, including parent node
 					push!(end_node,g); #add g to end_node
@@ -231,6 +235,64 @@ function prm(s,g,O)
         
         end #while
 end
+
+
+function RRT(s,g,O)
+    limits=world(s,g,O) #max and mins of objects in our world
+    step = minimum([O[:,4];1]); #set step to half the minimum radius
+    dis=step+1; #set distance to goal greater than step
+    Master = Any[]; #Master node list, including each node's 'parent'
+    start_node = Any[]; #start node info, including parent node
+    push!(start_node,s); #add s to start_node
+    push!(start_node,0); #sets parent node to 0 (start)
+    push!(Master, start_node); #adds start node 
+  
+    #-------------------------------------------------------------
+    while dis>step
+        sample=random(limits); #genertes a sample within bounds
+		
+		#-------------------------------------------------
+		if collide(O,sample)==false; # no collision!
+			closestRow=findClosestNode(Master,sample);
+			nearestDistance=dist(Master[closestRow][1],sample);
+			
+			#-----------------------------------------
+			if nearestDistance<=step
+				newNode=Any[];
+				push!(newNode,sample);
+				push!(newNode,closestRow);
+				push!(Master,newNode);
+				
+				#------------------------------------
+				goalDistance=dist(sample,g);
+				if goalDistance <= step
+					
+					end_node = Any[]; #end node info, including parent node
+					push!(end_node,g); #add g to end_node
+					push!(end_node,size(Master,1)); #sets parent node to last node before goal
+					push!(Master, end_node); #adds end node to Master
+					
+					reversePath=Any[];
+					row=size(Master,1);
+					#---------------------------------
+					while row != 0
+						push!(reversePath,Master[row][1]);
+						row=Master[row][2];
+					end
+					finalPath=reverse(reversePath);
+                    return Tuple(finalPath)
+
+                    
+                    
+                    
+				end
+			end
+			
+		end
+        
+        end #while
+end
+
 
 
 end # module

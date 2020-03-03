@@ -9,22 +9,27 @@ function findClosestNode(Master,sampleAsHomogenous)
 
 	nodeListLength = size(Master,1)
 	rollingMin = 1
-	closestNode = [0 0 0]
+	#closestNode = [0 0 0]
 	minRow = 5000
     sample = transpose(sampleAsHomogenous[1:3,4])
 
 	for i in 1:nodeListLength
-		currentDistance = sqrt((sample[1,1]-Master[i][1][1,4])^2 + (sample[1,2]-Master[i][1][2,4])^2 + (sample[1,3]-Master[i][1][3,4])^2)
-
+		
+	currentDistance=dist(sampleAsHomogenous, Master[i][1])	
+		
+		
+	#currentDistance = sqrt((sample[1,1]-Master[i][1][1,4])^2 + (sample[1,2]-Master[i][1][2,4])^2 + (sample[1,3]-Master[i][1][3,4])^2)
+	#only linear distance	
+		
 		if i == 1
 			rollingMin = currentDistance
-			closestNode = Master[i,:]
+			#closestNode = Master[i,:]
 			minRow = 1
 		end
 	
 		if currentDistance < rollingMin
 			rollingMin = currentDistance
-			closestNode = Master[i,:]
+			#closestNode = Master[i,:]
 			minRow = i
 		end
 

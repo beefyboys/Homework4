@@ -31,6 +31,45 @@ zmax = maximum(z_a) + 2;
 return [xmin xmax; ymin ymax; zmin zmax]
 end # function
 
+
+function collide(O,q)
+        rows_O,columns_O = size(O);
+        for i=1:rows_O
+
+            if O[i,5] == 0 #obstacle is a sphere
+
+                if sqrt( (O[i,1]-q[1,4])^2 + (O[i,2]-q[2,4])^2 + (O[i,3]-q[3,4])^2 ) <= O[i,4] + 1
+                  # distance between centers of spheres   <=  obstacle radius + robot radius
+                    return true #collision!
+                   
+                end
+                #ends if statement
+            
+            else #obstacle is a cylinder
+            
+                if q[3,4]-1 <= O[i,3] #robot is not completely above cylinder height
+                    
+                    if sqrt( (O[i,1]-q[1,4])^2 + (O[i,2]-q[2,4])^2 ) <= O[i,4] + 1
+                # distance between center of sphere and center line of cylinder <= obstacle radius + robot radius
+                    return true #collision!
+                    
+                    end
+                    #ends if statement
+                end
+                #ends if statement
+            
+                
+            end
+            #ends if statament
+
+        end
+        #ends for loop
+        return false #passes every collision check, no collision!
+    
+end
+#ends function
+
+
 function random(b)
 
 
@@ -50,18 +89,20 @@ return H
 
 end
 
-function test(x,y,z,theta)
-    f1=Matrix{Float64}(I, 4, 4);
+
+function test(x,y,z)
+    f1=Matrix{Int64}(I, 4, 4);
     
-    #(random_thetax,random_thetay,random_thetaz) = rand(3)*2*pi
-    Rx = [1 0 0;0 cos(theta) -sin(theta);0 sin(theta) cos(theta)];
-    #Ry = [cos(random_thetay) 0 -sin(random_thetay);0 1 0;sin(random_thetay) 0 cos(random_thetay)];
-    #Rz = [cos(random_thetaz) -sin(random_thetaz) 0;sin(random_thetaz) cos(random_thetaz) 0;0 0 1];
-    R = Rx;
+    (random_thetax,random_thetay,random_thetaz) = rand(3)*2*pi
+    Rx = [1 0 0;0 cos(random_thetax) -sin(random_thetax);0 sin(random_thetax) cos(random_thetax)];
+    Ry = [cos(random_thetay) 0 -sin(random_thetay);0 1 0;sin(random_thetay) 0 cos(random_thetay)];
+    Rz = [cos(random_thetaz) -sin(random_thetaz) 0;sin(random_thetaz) cos(random_thetaz) 0;0 0 1];
+    R = Rx*Ry*Rz;
     f2=zeros(4,4);
     f2[1:3,1:3]=R; f2[1:3,4]=[x;y;z;1];
     return (f1,f2)
 end
+
 
 function dist(f1, f2)
 
@@ -137,9 +178,54 @@ function prm(s,g,O)
   
     #-------------------------------------------------------------
     while dis>step
-        sample=random(limits);
+        sample=random(limits); #genertes a sample within bounds
+		
+		#-------------------------------------------------
+		if collide(O,sample)==false; # no collision!
+			closestRow=findClosestNode(Master,sample);
+			nearestDistance=dist(Master[closestRow][1],sample);
+			
+			#-----------------------------------------
+			if nearestDistance<=??????
+				newNode=Any[];
+				push!(newNode,sample);
+				push!(newNode,closestRow);
+				push!(Master,newNode);
+				println(Master)
+				#---------------------------------
+				goalDistance=dist(sample,g);
+				if goalDistance <= ??????
+					
+					end_node = Any[]; #end node info, including parent node
+					push!(end_node,g); #add g to end_node
+					push!(end_node,0); #sets parent node to 0 (start)
+				        push!(Master, size(Master,1)); #adds start node
+					
+					reversePath=Any[];
+					row=size(Master,1);
+					#-------------------------
+					while row != 0
+						push!(reversePath,Master[row][1]);
+						row=Master[row][2];
+					end
+					
+					sizePath=size(reversePath);
+					finalPath = zeros(1,sizePath);
+					
+					for  index=1:sizePath
+						finalPath(index) = reversePath(sizePath+1-index);
+						return tuple(finalPath);
+						
+					end
+						
+					
+				end
+			end
+			
+		end
         
         end #while
 end
+
 
 end # module

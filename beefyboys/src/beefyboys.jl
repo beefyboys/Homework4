@@ -1,6 +1,7 @@
 module beefyboys
 
 using LinearAlgebra
+using Distributions
 
 function world(s, g, O)
 
@@ -80,7 +81,7 @@ function random(b)
 random_x = rand(Uniform(b[1,1],b[1,2]));
 random_y = rand(Uniform(b[2,1],b[2,2]));
 random_z = rand(Uniform(b[3,1],b[3,2]));
-(random_thetax,random_thetay,random_thetaz) = rand(3)*2*pi;
+(random_thetax,random_thetay,random_thetaz) = rand(Uniform(0,1),3,1)*2*pi;
 
 Rx = [1 0 0;0 cos(random_thetax) -sin(random_thetax);0 sin(random_thetax) cos(random_thetax)];
 Ry = [cos(random_thetay) 0 -sin(random_thetay);0 1 0;sin(random_thetay) 0 cos(random_thetay)];

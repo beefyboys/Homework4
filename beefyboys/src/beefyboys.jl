@@ -186,15 +186,15 @@ function prm(s,g,O)
 			nearestDistance=dist(Master[closestRow][1],sample);
 			
 			#-----------------------------------------
-			if nearestDistance<=??????
+			if nearestDistance<=30
 				newNode=Any[];
 				push!(newNode,sample);
 				push!(newNode,closestRow);
 				push!(Master,newNode);
-				println(Master)
-				#---------------------------------
+				
+				#------------------------------------
 				goalDistance=dist(sample,g);
-				if goalDistance <= ??????
+				if goalDistance <= 30
 					
 					end_node = Any[]; #end node info, including parent node
 					push!(end_node,g); #add g to end_node
@@ -203,22 +203,17 @@ function prm(s,g,O)
 					
 					reversePath=Any[];
 					row=size(Master,1);
-					#-------------------------
+					#---------------------------------
 					while row != 0
 						push!(reversePath,Master[row][1]);
 						row=Master[row][2];
 					end
-					
-					sizePath=size(reversePath);
-					finalPath = zeros(1,sizePath);
-					
-					for  index=1:sizePath
-						finalPath(index) = reversePath(sizePath+1-index);
-						return tuple(finalPath);
-						
-					end
-						
-					
+					finalPath=reverse(reversePath);
+                    return Tuple(finalPath)
+
+                    
+                    
+                    
 				end
 			end
 			

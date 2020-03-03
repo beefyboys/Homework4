@@ -2,25 +2,6 @@ module beefyboys
 
 using LinearAlgebra
 
-function prm(s,g,O)
-    limits=world(s,g,O)
-    step = .5*minimum([O[:,4];1]);
-    dis=step+1;
-    Master = Any[];
-    start_node = Any[];
-    push!(start_node,s);
-    push!(start_node,0);
-    push!(Master, start_node);
-  
-    #-------------------------------------------------------------
-    while dis>step
-        sample=random(limits);
-        
-        end #while
-end
-
-    
-
 
 
 function world(s, g, O)
@@ -65,7 +46,7 @@ Ry = [cos(random_thetay) 0 -sin(random_thetay);0 1 0;sin(random_thetay) 0 cos(ra
 Rz = [cos(random_thetaz) -sin(random_thetaz) 0;sin(random_thetaz) cos(random_thetaz) 0;0 0 1];
     R = Rx*Ry*Rz;
     H=zeros(4,4);
-    H[1:3,1:3]=R; H[1:3,4]=[random_x;random_y;random_z];
+    H[1:3,1:3]=R; H[1:4,4]=[random_x;random_y;random_z;1];
     
 return H
 
@@ -84,5 +65,21 @@ function test(x,y,z,theta)
     return (f1,f2)
 end
 
+function prm(s,g,O)
+    limits=world(s,g,O) #max and mins of objects in our world
+    step = .5*minimum([O[:,4];1]); #set step to half the minimum radius
+    dis=step+1; #set distance to goal greater than step
+    Master = Any[]; #Master node list, including each node's 'parent'
+    start_node = Any[]; #start node info, including parent node
+    push!(start_node,s); #add s to start_node
+    push!(start_node,0); #sets parent node to 0 (start)
+    push!(Master, start_node); #add 
+  
+    #-------------------------------------------------------------
+    while dis>step
+        sample=random(limits);
+        
+        end #while
+end
 
 end # module

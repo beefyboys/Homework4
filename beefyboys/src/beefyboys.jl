@@ -79,7 +79,7 @@ function findTestNode(closestNode, sample1, stepSize)
        travel = zeros(3,1)
        testNode = zeros(4,4)
        travel = sample1[1:3,4] - closestNode[1:3,4]
-       norm = sqrt((sample1[1,4]-closestNode[1,4])^2 + (sample1[1,4]-closestNode[1,4])^2 + (sample1[1,4]-closestNode[1,4])^2)
+       norm = sqrt((sample1[1,4]-closestNode[1,4])^2 + (sample1[2,4]-closestNode[2,4])^2 + (sample1[3,4]-closestNode[3,4])^2)
        
        normWithStep = (travel/norm) * stepSize
        

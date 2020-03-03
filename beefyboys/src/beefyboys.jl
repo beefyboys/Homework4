@@ -198,8 +198,8 @@ function prm(s,g,O)
 					
 					end_node = Any[]; #end node info, including parent node
 					push!(end_node,g); #add g to end_node
-					push!(end_node,0); #sets parent node to 0 (start)
-				        push!(Master, size(Master,1)); #adds start node
+					push!(end_node,size(Master,1)); #sets parent node to last node before goal
+					push!(Master, end_node); #adds end node to Master
 					
 					reversePath=Any[];
 					row=size(Master,1);

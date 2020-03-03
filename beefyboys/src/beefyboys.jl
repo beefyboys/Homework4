@@ -75,6 +75,18 @@ end
 #ends function
 
 
+function findTestNode(closestNode, sample, stepSize)
+
+       matrixBetween = sample - closestNode
+
+       norm = sqrt(matrixrBetween[1,4]^2 + matrixBetween[2,4]^2 + matrixBetween[3,4]^2)
+
+       testnode=sample;
+	testNode[1:3,4] = (matrixBetween[1:3,4]/norm) * stepSize
+
+       end
+
+
 function random(b)
 
 

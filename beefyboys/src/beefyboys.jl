@@ -76,13 +76,16 @@ end
 
 
 function findTestNode(closestNode, sample, stepSize)
+    testNode=zeros(4,4);
+   
+    matrixBetween = sample - closestNode;
 
-       matrixBetween = sample - closestNode
+       norm = sqrt(matrixBetween[1,4]^2 + matrixBetween[2,4]^2 + matrixBetween[3,4]^2);
 
-       norm = sqrt(matrixrBetween[1,4]^2 + matrixBetween[2,4]^2 + matrixBetween[3,4]^2)
-
-       testnode=sample;
-	testNode[1:3,4] = (matrixBetween[1:3,4]/norm) * stepSize
+       testNode[1:3,1:3]=sample[1:3,1:3];
+	testNode[1:3,4] = (matrixBetween[1:3,4]/norm) * stepSize + closestNode[1:3,4];
+    testNode[4,4]=1;
+    return testNode
 
        end
 
@@ -195,7 +198,7 @@ end
 
 function PRM(s,g,O)
     limits=world(s,g,O) #max and mins of objects in our world
-    step = minimum([O[:,4];1]); #set step to half the minimum radius
+    step = 10*minimum([O[:,4];1]); #set step to half the minimum radius
     dis=step+1; #set distance to goal greater than step
     Master = Any[]; #Master node list, including each node's 'parent'
     start_node = Any[]; #start node info, including parent node
@@ -265,19 +268,27 @@ function RRT(s,g,O)
         sample=random(limits); #genertes a sample within bounds
 		
 		#-------------------------------------------------
-		if collide(O,sample)==false; # no collision!
+		
 			closestRow=findClosestNode(Master,sample);
-			nearestDistance=dist(Master[closestRow][1],sample);
 			
-			#-----------------------------------------
-			if nearestDistance<=step
+			
+			
+			
 				newNode=Any[];
-				push!(newNode,sample);
+                
+                testNode=findTestNode(Master[closestRow][1], sample, step)
+                
+        
+                #-----------------------------------------
+            if collide(O,testNode)==false; # no collision!
+                
+				push!(newNode,testNode);
 				push!(newNode,closestRow);
 				push!(Master,newNode);
+            
 				
 				#------------------------------------
-				goalDistance=dist(sample,g);
+				goalDistance=dist(testNode,g);
 				if goalDistance <= step
 					
 					end_node = Any[]; #end node info, including parent node
@@ -299,11 +310,11 @@ function RRT(s,g,O)
                     
                     
 				end
-			end
+            end
 			
-		end
+		
         
-        end #while
+    end #while
 end
 
 

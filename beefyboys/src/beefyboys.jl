@@ -77,9 +77,9 @@ end
 function random(b)
 
 
-random_x = rand(b[1,1]:b[1,2]);
-random_y = rand(b[2,1]:b[2,2]);
-random_z = rand(b[3,1]:b[3,2]);
+random_x = rand(Uniform(b[1,1],b[1,2]));
+random_y = rand(Uniform(b[2,1],b[2,2]));
+random_z = rand(Uniform(b[3,1],b[3,2]));
 (random_thetax,random_thetay,random_thetaz) = rand(3)*2*pi;
 
 Rx = [1 0 0;0 cos(random_thetax) -sin(random_thetax);0 sin(random_thetax) cos(random_thetax)];

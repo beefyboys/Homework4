@@ -8,7 +8,7 @@ function findTestNode(closestNode, sample1, stepSize)
        
        normWithStep = (travel/norm) * stepSize
        
-       testNode[1:3,4] = testNode[1:3,4] + normWithStep
+       testNode[1:3,4] = closestNode[1:3,4] + normWithStep
        
        testNode[1:3,1:3] = sample1[1:3,1:3]
      

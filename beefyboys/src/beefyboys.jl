@@ -2,8 +2,6 @@ module beefyboys
 
 using LinearAlgebra
 
-
-
 function world(s, g, O)
 
 O_1 = O[:,1];
@@ -73,7 +71,7 @@ function prm(s,g,O)
     start_node = Any[]; #start node info, including parent node
     push!(start_node,s); #add s to start_node
     push!(start_node,0); #sets parent node to 0 (start)
-    push!(Master, start_node); #add 
+    push!(Master, start_node); #adds start node 
   
     #-------------------------------------------------------------
     while dis>step

@@ -1,0 +1,5 @@
+function prettyTuple(tuple)
+       for i in 1:size(tuple,1)
+           println(tuple[i])
+       end
+       end 

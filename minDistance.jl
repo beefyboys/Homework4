@@ -5,7 +5,7 @@ greet() = print("Hello Loser!")
 
 function findClosestNode(Master,sampleAsHomogenous)
 
-	#nodeList should be a N x 3 list of points in 3space, sample should be a single point in 3space
+	# Master is an Nx2 array. Col. 1 is 4x4 nodes, Col. 2 is node's row in 'Master'
 
 	nodeListLength = size(Master,1)
 	rollingMin = 1

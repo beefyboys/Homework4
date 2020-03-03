@@ -126,6 +126,16 @@ return theta*dlinear
 
 end 
 
+
+function pathcost(a)
+    finalcost=0
+    for pathIndex=1:size(a,1)-1
+        finalcost=finalcost+dist(a[pathIndex],a[pathIndex+1])
+    end
+    return finalcost
+end
+
+
 function findClosestNode(Master,sampleAsHomogenous)
 
 	# Master is an Nx2 array. Col. 1 is 4x4 nodes, Col. 2 is node's row in 'Master'
@@ -186,7 +196,7 @@ function prm(s,g,O)
 			nearestDistance=dist(Master[closestRow][1],sample);
 			
 			#-----------------------------------------
-			if nearestDistance<=30
+			if nearestDistance<=1
 				newNode=Any[];
 				push!(newNode,sample);
 				push!(newNode,closestRow);
@@ -194,7 +204,7 @@ function prm(s,g,O)
 				
 				#------------------------------------
 				goalDistance=dist(sample,g);
-				if goalDistance <= 30
+				if goalDistance <= 1
 					
 					end_node = Any[]; #end node info, including parent node
 					push!(end_node,g); #add g to end_node

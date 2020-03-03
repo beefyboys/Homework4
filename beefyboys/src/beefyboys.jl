@@ -81,7 +81,6 @@ theta = acos((tr(R)-1)/2);
 
 dlinear = sqrt((y_1-x_1)^2 + (y_2-x_2)^2 + (y_3-x_3)^2);
 
-println("d =")
 return theta*dlinear
 
 end 

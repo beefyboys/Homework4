@@ -5,10 +5,12 @@ using Distributions
 
 function world(s, g, O)
 
-O_1 = O[:,1];
-O_2 = O[:,2];
-O_3 = O[:,3];
+O_x = O[:,1];
+O_y = O[:,2];
+O_z = O[:,3];
 
+R = O[:,4];
+	
 s_1 = s[1,4];
 s_2 = s[2,4];
 s_3 = s[3,4];
@@ -17,16 +19,16 @@ g_1 = g[1,4];
 g_2 = g[2,4];
 g_3 = g[3,4];
 
-x_a = [O_1; s_1; g_1];
-y_a = [O_2; s_2; g_2];
-z_a = [O_3; s_3; g_3];
+x_a = [(O_x+R); (O_x-R); s_1; g_1];
+y_a = [(O_y+R); (O_y-R); s_2; g_2];
+z_a = [(O_z+R); (O_z-R); s_3; g_3];
 
-xmin = minimum(x_a) - 2; 
-xmax = maximum(x_a) + 2;
-ymin = minimum(y_a) - 2;
-ymax = maximum(y_a) + 2;
+xmin = minimum(x_a) - 2.5; 
+xmax = maximum(x_a) + 2.5;
+ymin = minimum(y_a) - 2.5;
+ymax = maximum(y_a) + 2.5;
 zmin = 0;
-zmax = maximum(z_a) + 2;
+zmax = maximum(z_a) + 2.5;
         
 
 return [xmin xmax; ymin ymax; zmin zmax]

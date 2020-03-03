@@ -4,7 +4,7 @@ function collide(O,q)
 
             if O[i,5] == 0 #obstacle is a sphere
 
-                if sqrt( (O[i,1]-q[1])^2 + (O[i,2]-q[2])^2 + (O[i,3]-q[3])^2 ) <= O[i,4] + 1
+                if sqrt( (O[i,1]-q[1,4])^2 + (O[i,2]-q[2,4])^2 + (O[i,3]-q[3,4])^2 ) <= O[i,4] + 1
                   # distance between centers of spheres   <=  obstacle radius + robot radius
                     return true #collision!
                    
@@ -13,9 +13,9 @@ function collide(O,q)
             
             else #obstacle is a cylinder
             
-                if q[3]-1 <= O[i,3] #robot is not completely above cylinder height
+                if q[3,4]-1 <= O[i,3] #robot is not completely above cylinder height
                     
-                    if sqrt( (O[i,1]-q[1])^2 + (O[i,2]-q[2])^2 ) <= O[i,4] + 1
+                    if sqrt( (O[i,1]-q[1,4])^2 + (O[i,2]-q[2,4])^2 ) <= O[i,4] + 1
                 # distance between center of sphere and center line of cylinder <= obstacle radius + robot radius
                     return true #collision!
                     

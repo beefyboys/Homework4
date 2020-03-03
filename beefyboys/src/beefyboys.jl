@@ -75,19 +75,21 @@ end
 #ends function
 
 
-function findTestNode(closestNode, sample, stepSize)
-    testNode=zeros(4,4);
-   
-    matrixBetween = sample - closestNode;
-
-       norm = sqrt(matrixBetween[1,4]^2 + matrixBetween[2,4]^2 + matrixBetween[3,4]^2);
-
-       testNode[1:3,1:3]=sample[1:3,1:3];
-	testNode[1:3,4] = (matrixBetween[1:3,4]/norm) * stepSize + closestNode[1:3,4];
-    testNode[4,4]=1;
-    return testNode
-
-       end
+function findTestNode(closestNode, sample1, stepSize)
+       travel = zeros(3,1)
+       testNode = zeros(4,4)
+       travel = sample1[1:3,4] - closestNode[1:3,4]
+       norm = sqrt((sample1[1,4]-closestNode[1,4])^2 + (sample1[1,4]-closestNode[1,4])^2 + (sample1[1,4]-closestNode[1,4])^2)
+       
+       normWithStep = (travel/norm) * stepSize
+       
+       testNode[1:3,4] = testNode[1:3,4] + normWithStep
+       
+       testNode[1:3,1:3] = sample1[1:3,1:3]
+     
+       testNode[4,4] = 1
+       
+end
 
 
 function random(b)
